@@ -22,7 +22,6 @@
             </div>
         </div>
         <textarea name="tb" id="tb" cols="30" rows="10" hidden></textarea>
-    <!-- <button onclick="refreshHTML()">pla</button> -->
         <div id="editor2" class="window active-window">
             <div class="handle">LESS<button class="minimize">-</button></div>
             <div class="tac">
@@ -38,8 +37,6 @@
     </div>
 
 
-<script src="asd.js"></script>
-<script src="app.js"></script>
 <script src="struct.js"></script>
 <script src="third-party/less-1.6.2.min.js"></script>
 <script src="third-party/codemirror/lib/codemirror.js"></script>
@@ -50,6 +47,9 @@
 <script src="third-party/codemirror/jade.js"></script>
 <script src="third-party/jscolor/jscolor.js" type="text/javascript"></script>
 <script src="third-party/draggabilly.pkgd.js" type="text/javascript"></script>
+<script src="third-party/classie.js" type="text/javascript"></script>
+<script src="asd.js"></script>
+<script src="app.js"></script>
     <script>
     var editor = CodeMirror.fromTextArea($$("ts"), {
         lineNumbers : true,
@@ -92,14 +92,19 @@
             fn(this[i]);
         };
     }
-    document.getElementsByClassName('minimize').forEach(function(elem){elem.onclick=function(){var x=this.parentElement.parentElement;classie.toggle(x,'window');classie.toggle(x,'hidden-window')}})
+    document.getElementsByClassName('minimize').forEach(function(elem){
+        elem.onclick=function(){
+            var x=this.parentElement.parentElement;
+            classie.toggle(x,'window');
+            classie.toggle(x,'hidden-window')
+        }
+    })
     document.getElementsByClassName('window').forEach(function(elem){
         elem.onmousedown=function(){
             document.getElementsByClassName('window').forEach(function(elem1){
                 if(!(Number(elem1.style.zIndex)<3))elem1.style.zIndex-=1
 
             });
-            //classie.add(this,'active-window');
             this.style.zIndex=10;
         }
     })
