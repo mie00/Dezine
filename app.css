@@ -1,0 +1,96 @@
+.CodeMirror{
+	margin: 0;
+	padding: 0;
+}
+.tac{
+}
+#textareas{
+	display: block;
+	clear: both;
+	margin: 0;
+	padding: 0;
+}
+#miecont{
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	z-index: -1;
+}
+.handle{
+	height:20px;
+	background:#7baaed;
+	border:1px solid #333;
+	cursor: move;
+
+}
+.window{
+	resize: both;
+
+	max-width: 100%;
+	width: 49%;
+	display: inline-block;
+	margin: 0 2px;
+	padding: 0;
+	position: absolute;
+}
+.hidden-window{
+	display: inline;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+}
+.hidden-window .CodeMirror,.hidden-window  #controls{
+	display: none;
+}
+.footer{
+	height: 20px;
+	visibility: hidden;
+}
+.active-window{
+	z-index: 20;
+}
+.minimize{
+
+	vertical-align: center; 
+	float: right;
+	height: 100%;
+	width: auto;
+}
+#controls-window{
+	width:auto;
+}
+#controls{
+	resize: both;
+	overflow:auto;
+	background-color: #fff;
+	max-width: 100%;
+}
+#controls *{
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	vertical-align: top;
+}
+#controls input{
+	-webkit-appearance: tooltip;
+	-moz-appearance: tooltip;
+	appearance: tooltip;
+}
+#controls input.color1{
+	-webkit-appearance: initial;
+	-moz-appearance: initial;
+	appearance: initial;
+}
+.controls-row{
+	display: block;
+	white-space: nowrap;
+}
+.controls-row > *{
+	display:inline-block;
+
+	border:  solid #000000;
+	border-width: 0 1px;
+}
+.controls-table > *{
+	vertical-align: top;
+}

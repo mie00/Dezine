@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jade parser</title>
+    <style type="text/less" id="miestyle"></style>
+    <link rel="stylesheet" href="third-party/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="third-party/codemirror/addon/hint/show-hint.css">
+	<link rel="stylesheet" href="third-party/codemirror/theme/solarized.css">
+    <link rel="stylesheet" href="third-party/normalize.css">
+	<link rel="stylesheet" href="app.css">
+
+</head>
+<body onload="refreshStyle();refreshHTML();">
+    <div id="miecont"><div id="miecont2"><div id="miebody"></div></div></div>
+    <div id="textareas">
+        <div id="editor1" class="window" style="float:right;">
+            <div class="handle">Jade <button class="minimize">-</button></div>
+            <div class="tac">
+                <textarea name="ta" id="ta" cols="30" rows="10"></textarea>
+                <div class="footer"></div>
+            </div>
+        </div>
+        <textarea name="tb" id="tb" cols="30" rows="10" hidden></textarea>
+    <!-- <button onclick="refreshHTML()">pla</button> -->
+        <div id="editor2" class="window active-window">
+            <div class="handle">LESS<button class="minimize">-</button></div>
+            <div class="tac">
+                <textarea name="ts" id="ts" cols="30" rows="10"></textarea>
+                <div class="footer"></div>
+            </div>
+        </div>
+        <div id="controls-window" class="window">
+            <div class="handle">CSS CONTROLS<button class="minimize">-</button></div>
+            <div id="controls">
+            </div>
+        </div>
+    </div>
+
+
+<script src="asd.js"></script>
+<script src="app.js"></script>
+<script src="struct.js"></script>
+<script src="third-party/less-1.6.2.min.js"></script>
+<script src="third-party/codemirror/lib/codemirror.js"></script>
+<script src="third-party/codemirror/addon/hint/show-hint.js"></script>
+<script src="third-party/codemirror/addon/hint/css-hint.js"></script>
+<script src="third-party/codemirror/addon/edit/matchbrackets.js"></script>
+<script src="third-party/codemirror/css.js"></script>
+<script src="third-party/codemirror/jade.js"></script>
+<script src="third-party/jscolor/jscolor.js" type="text/javascript"></script>
+<script src="third-party/draggabilly.pkgd.js" type="text/javascript"></script>
+    <script>
+    var editor = CodeMirror.fromTextArea($$("ts"), {
+        lineNumbers : true,
+        matchBrackets : true,
+        indentUnit:4,
+        mode: "text/x-less",
+        extraKeys: {//"Ctrl-Space": "autocomplete",
+    				"Ctrl-Enter": refreshStyle,
+                    "Ctrl-Space": initialize},
+    	theme:"solarized light"
+    });
+    var editor2 = CodeMirror.fromTextArea($$("ta"), {
+        lineNumbers : true,
+        matchBrackets : true,
+        indentUnit:4,
+        mode: "jade",
+        extraKeys: {"Ctrl-Space": "autocomplete",
+    				"Ctrl-Enter": refreshHTML},
+    	theme:"solarized light"
+    });
+    new Draggabilly( $$('editor1'), {
+        handle: '.handle'
+    });
+
+    new Draggabilly( $$('editor2'), {
+        handle: '.handle'
+    });
+    new Draggabilly( $$('controls-window'), {
+        handle: '.handle'
+    });
+    HTMLCollection.prototype.map=function(fn){
+        var tarr=[]
+        for (var i = 0; i < this.length; i++) {
+            tarr.push(fn(this[i]));
+        };
+        return tarr;
+    }
+    HTMLCollection.prototype.forEach=function(fn){
+        for (var i = 0; i < this.length; i++) {
+            fn(this[i]);
+        };
+    }
+    document.getElementsByClassName('minimize').forEach(function(elem){elem.onclick=function(){var x=this.parentElement.parentElement;classie.toggle(x,'window');classie.toggle(x,'hidden-window')}})
+    document.getElementsByClassName('window').forEach(function(elem){
+        elem.onmousedown=function(){
+            document.getElementsByClassName('window').forEach(function(elem1){
+                if(!(Number(elem1.style.zIndex)<3))elem1.style.zIndex-=1
+
+            });
+            //classie.add(this,'active-window');
+            this.style.zIndex=10;
+        }
+    })
+    document.getElementsByClassName('window').forEach(function(elem1){
+        elem1.style.zIndex=2
+      });
+    </script>
+</body>
+</html>
