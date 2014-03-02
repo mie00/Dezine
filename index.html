@@ -14,23 +14,23 @@
 <body onload="refreshStyle();refreshHTML();">
     <div id="miecont"><div id="miecont2"><div id="miebody"></div></div></div>
     <div id="textareas">
-        <div id="editor1" class="window" style="float:right;">
-            <div class="handle">Jade <button class="minimize">-</button></div>
+        <div id="editor1" class="window visible-window" style="float:right;">
+            <div class="handle"><span>Jade</span><button class="minimize">-</button></div>
             <div class="tac">
                 <textarea name="ta" id="ta" cols="30" rows="10"></textarea>
                 <div class="footer"></div>
             </div>
         </div>
         <textarea name="tb" id="tb" cols="30" rows="10" hidden></textarea>
-        <div id="editor2" class="window active-window">
-            <div class="handle">LESS<button class="minimize">-</button></div>
+        <div id="editor2" class="window visible-window">
+            <div class="handle"><span>LESS</span><button class="minimize">-</button></div>
             <div class="tac">
                 <textarea name="ts" id="ts" cols="30" rows="10"></textarea>
                 <div class="footer"></div>
             </div>
         </div>
-        <div id="controls-window" class="window">
-            <div class="handle">CSS CONTROLS<button class="minimize">-</button></div>
+        <div id="controls-window" class="window visible-window">
+            <div class="handle"><span>CSS CONTROLS</span><button class="minimize">-</button></div>
             <div id="controls">
             </div>
         </div>
@@ -95,7 +95,7 @@
     document.getElementsByClassName('minimize').forEach(function(elem){
         elem.onclick=function(){
             var x=this.parentElement.parentElement;
-            classie.toggle(x,'window');
+            classie.toggle(x,'visible-window');
             classie.toggle(x,'hidden-window')
         }
     })
