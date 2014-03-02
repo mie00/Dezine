@@ -98,6 +98,7 @@ function row(){
 	return '<div class="controls-row">'+str+'</div>'
 }
 function Choose(children){
+	var self=this;
 	this.state=0;
 	this.min=0;
 	this.max=children.length-1
@@ -111,10 +112,10 @@ function Choose(children){
 			return[this.show(arr),arr]
 		}
 		var ind=arr.push(this)-1;
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()">&lt;</button>',
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>&lt;</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()">&gt;</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>&gt;</button>'),
 			row(this.children[this.state].show(arr)))
 	}
 	this.copy=function(){
@@ -163,9 +164,8 @@ function Concatinate(children){
 	this.randomizeVars=randomizeVars;
 }
 function Repeat(child,sep,min,max){
-	self=this;
+	var self=this;
 	this.min=min;
-	console.log(min)
 	this.state=min;
 	this.max=max;
 	this.child=child;
@@ -181,10 +181,10 @@ function Repeat(child,sep,min,max){
 			return[this.show(arr),arr]
 		}
 		var ind=arr.push(this)-1;
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()">-</button>',
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>-</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()">+</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>+</button>'),
 			row(this.children.map(function(x){return x.show(arr);})))
 	}
 	this._join=function(arr){
@@ -196,7 +196,7 @@ function Repeat(child,sep,min,max){
 	this.valCopy=valCopy;
 	this._changeState=changeState;
 	this.changeState=function(state){
-		self=this;
+		var self=this;
 		this._changeState(state);
 		var diff=this.children.length-this.state;
 		if (diff>0)loop(diff).forEach(function(){self.children.pop()})
@@ -208,6 +208,7 @@ function Repeat(child,sep,min,max){
 	this.randomizeVars=randomizeVars;
 }
 function Check(child){
+	var self=this;
 	this.state=1;
 	this.min=0;
 	this.max=1;
@@ -225,10 +226,11 @@ function Check(child){
 			return [this.show(arr),arr]
 		}
 		var ind=arr.push(this)-1;
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()">OFF</button>',
+		console.log(this)
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>OFF</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()">ON</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>ON</button>'),
 			row((this.state?('<tr><td colspan=3>'+this.children[0].show(arr)+'</td></tr>'):'')))
 	}
 	this.copy=function(){
@@ -237,7 +239,7 @@ function Check(child){
 	this.valCopy=valCopy;
 	this._changeState=changeState;
 	this.changeState=function(state){
-		self=this;
+		var self=this;
 		this._changeState(state);
 		var diff=this.children.length-this.state;
 		if (diff>0)loop(diff).forEach(function(){self.children.pop()})
