@@ -134,8 +134,8 @@ var val_dict={
 "charset": ["UTF-8",function(){return "UTF-8"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
 "encoded-data": ["R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7",function(){return "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
 "x": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
-"y": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}]}
-
+"y": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}]
+}
 function initialize(){
     var cursor=editor.getCursor()
     var line=cursor.line;
@@ -259,9 +259,8 @@ function resetProps(){
 }
 /*
 TODO:
-changing less makes a bug
+changing less makes a bug in controller
 less vars
-increase,decrease val
 spaces on tab before properties
 docs
 style
