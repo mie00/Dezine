@@ -99,8 +99,6 @@
 }
 #controls-window #controls .controls-row > * {
   display: inline-block;
-  border: solid #000000;
-  border-width: 0 1px;
 }
 #controls-window #controls .controls-table > * {
   vertical-align: top;
