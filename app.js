@@ -76,7 +76,6 @@ function parse(jade){
         if (!isnormaltext){
 
             match=sent.match(/^((?:[ ]{4})*)(\w+|\|)((?:\.\w+)*(?:#\w+)?(?:\.\w+)*)(\.?)((?:\([^)]+\))?)[ ]*(.*)$/);
-            console.log(match)
             element=new Element(match[2],match[3],ladd[match[1].length/4-1],match[6],match[5]);
             if(ladd[match[1].length/4-1])ladd[match[1].length/4-1].children.push(element)
             ladd[match[1].length/4]=element;
@@ -120,22 +119,22 @@ var curr_id;
 var curr_undo=[]
 var curr_undo_loc;
 var val_dict={
-"alphavalue": ["0.7",function(){return randfloat(1)},function(str,ind,inc,step=0.1){if (!inc)step=-step;return Number(str)+step}],
-"non-negative-integer": ["2",function(){return randint(10)},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str)+step}],
-"number": ["2",function(){return randint(10)},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str)+step}],
-"integer": ["2",function(){return randint(10)},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str)+step}],
-"percentage": ["70%",function(){return randint(101)+'%'},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str.slice(0,-1))+step+'%'}],
-"angle": ["70deg",function(){return randint(360)+'deg'},function(str,ind,inc,step=10){if (!inc)step=-step;return Number(str.slice(0,-3))+step+'deg'}],
+"alphavalue": ["0.7",function(){return randfloat(1)},function(str,ind,inc,step,undef){step=(step!=undef)?step:0.1;if (!inc)step=-step;return Number(str)+step}],
+"non-negative-integer": ["2",function(){return randint(10)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str)+step}],
+"number": ["2",function(){return randint(10)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str)+step}],
+"integer": ["2",function(){return randint(10)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str)+step}],
+"percentage": ["70%",function(){return randint(101)+'%'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-1))+step+'%'}],
+"angle": ["70deg",function(){return randint(360)+'deg'},function(str,ind,inc,step,undef){step=(step!=undef)?step:10;if (!inc)step=-step;return Number(str.slice(0,-3))+step+'deg'}],
 //no change yet see color[2]
-"color": ["#ab65d0",function(){return '#'+padzeros(randint(16777215).toString(16),6)},function(str,ind,inc,step=1){return str}],
-"length": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
-"string": ["'MIE'",function(){return "'"+concfn(6,randchoise,['0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ']).join('')+"'"},function(str,ind,inc,step=1){return str}],
-"time": ["2s",function(){return randint(5000)+'ms'},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str.slice(0,-1))+step+'S'}],
-"mime-type": ["image/gif",function(){return "image/gif"},function(str,ind,inc,step=1){return str}],
-"charset": ["UTF-8",function(){return "UTF-8"},function(str,ind,inc,step=1){return str}],
-"encoded-data": ["R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7",function(){return "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"},function(str,ind,inc,step=1){return str}],
-"x": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
-"y": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step=1){if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}]}
+"color": ["#ab65d0",function(){return '#'+padzeros(randint(16777215).toString(16),6)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
+"length": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
+"string": ["'MIE'",function(){return "'"+concfn(6,randchoise,['0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ']).join('')+"'"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
+"time": ["2s",function(){return randint(5000)+'ms'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-1))+step+'S'}],
+"mime-type": ["image/gif",function(){return "image/gif"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
+"charset": ["UTF-8",function(){return "UTF-8"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
+"encoded-data": ["R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7",function(){return "R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7"},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;return str}],
+"x": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
+"y": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}]}
 
 function initialize(){
     var cursor=editor.getCursor()
@@ -181,7 +180,6 @@ function updateControls(dict){
         }
     }
     else{
-        console.log(123)
         for (var i = 0; i < curr_dict.length; i++) {
             $$("pla_"+i).value=curr_dict[i].render();
         };
@@ -195,8 +193,8 @@ function pressed(ev,el){
 
     e = ev || window.event;
     var charCode = e.charCode || e.keyCode;
+        console.log(charCode)
     if (e.ctrlKey == true){
-        console.log(1)
         if (charCode == 32){
             curr_id=el.id;
             e.preventDefault();
@@ -239,7 +237,6 @@ function redo(){
 function setProps(i){
     curr_undo_loc=i
     var arr=curr_undo[i];
-    console.log(arr)
     keys=Object.keys(arr)
     for (var i = 0; i < keys.length; i++) {
         curr_dict[keys[i]].val=arr[keys[i]];
