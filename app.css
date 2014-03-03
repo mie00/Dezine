@@ -16,7 +16,6 @@
   overflow: hidden;
   background: #7baaed;
   border-bottom: 1px solid #000;
-  margin-bottom: 1px;
   cursor: move;
   border-radius: 15px 15px 0px 0px ;
   box-shadow: inset 0px 20px 20px -10px #a8c7f3;
@@ -64,15 +63,9 @@
 .visible-window {
   width: 49%;
   display: inline-block;
-  margin: 0;
-  padding: 0;
-  position: absolute;
 }
 .hidden-window {
   display: inline;
-  margin: 0;
-  padding: 0;
-  position: absolute;
 }
 .hidden-window .CodeMirror,
 .hidden-window #controls {
