@@ -1,5 +1,14 @@
-function $$(id){return document.getElementById(id);}
+/*
+    oooooooooooooooooooooooo
+    o main helper functions o
+    oooooooooooooooooooooooo
+*/
+function $$(id){
+    // document.getElementById
+    return document.getElementById(id);
+}
 function eq(a,b){
+    // check equality between two arrary
     if (a.length!=b.length)return false
     for (var i = 0; i < a.length; i++) {
         if (a[i]!=b[i])return false
@@ -7,7 +16,13 @@ function eq(a,b){
 
     return true
 }
+/*
+    oooooooooooooooooooooo
+    o simple jade parser o
+    oooooooooooooooooooooo
+*/
 function Element(tag,classes,parent,content,args,undef){
+    // Class for creating a tree for HTML tags
     self=this;
 	if (content=="lorem")content="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, officia, laudantium, iusto minus similique aliquam sapiente deserunt qui illo quia quam magni voluptatem atque maiores cum eveniet accusantium impedit quae cupiditate ea amet rem sed mollitia quis delectus libero sequi adipisci nobis hic animi voluptates rerum maxime dolorum. Voluptate, animi minus totam delectus aliquam hic itaque dolorum exercitationem eum obcaecati odio rerum error repellendus labore suscipit ipsum deserunt at dicta doloribus atque provident sapiente ut tempora dolore et! Magnam sint dicta a commodi consectetur. Consequatur, odit, veniam, minus nobis deleniti ducimus harum praesentium sed accusantium quam voluptatum molestiae sapiente eveniet."
     this.tag = (tag=="|")?"":tag;
@@ -45,6 +60,7 @@ function Element(tag,classes,parent,content,args,undef){
     };
 }
 function parse(jade){
+    // main jade parser
     jade=jade.replace(/^\t/gm,"    ")
     jade=jade.replace(/</g,'&lt;').replace(/>/g,'&gt;')
     sep='\n'
@@ -86,7 +102,13 @@ function parse(jade){
     };
     return ladd[-1].render()
 }
+/*
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    o the functions that changes the html or style of the div o
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+*/
 function refreshStyle(){
+    // refreshes style
     editor.save();
 	if($$('less-error-message:inline'))$$('less-error-message:inline').remove();
 	$$('miestyle').type='text/less';
@@ -94,31 +116,37 @@ function refreshStyle(){
 	less(window);
 }
 function refreshHTML(){
+    // refreshes html
     editor2.save();
 	$$('miebody').innerHTML=$$('tb').value=parse($$('ta').value);
 }
+/*
+    ooooooooooooooooooooooooooooooooooooooooo
+    o helpers to changing variables' values o
+    ooooooooooooooooooooooooooooooooooooooooo
+*/
 function randfloat(x){
+    // random float of maximum x
     return Math.random()*x
 }
 function randint(x){
+    // random int of maximum x
     return Math.floor(randfloat(x+1))
 }
 function randchoise(arr){
+    // random choise of arr
     return arr[randint(arr.length-1)]
 }
 function concfn(num,fn,args){
-    return Array.apply(null,Array(num)).map(function(){return randchoise.apply(null,args)})
+    // apply (args) to (fn) (num) times and returning an array of the returned values
+    return Array.apply(null,Array(num)).map(function(){return fn.apply(null,args)})
 }
 function padzeros(str,num){
+    // increase the length of the string by padding zeros
     return Array.apply(null,Array(num-str.length)).map(function(){return '0'}).join("")+str;
 }
-var curr_dict=[];
-var curr_line;
-var curr_prop;
-var curr_id;
-var curr_undo=[]
-var curr_undo_loc;
 var val_dict={
+// dict gets a random value for variables and increase/decrease their values
 "alphavalue": ["0.7",function(){return randfloat(1)},function(str,ind,inc,step,undef){step=(step!=undef)?step:0.1;if (!inc)step=-step;return Number(str)+step}],
 "non-negative-integer": ["2",function(){return randint(10)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str)+step}],
 "number": ["2",function(){return randint(10)},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str)+step}],
@@ -136,7 +164,22 @@ var val_dict={
 "x": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}],
 "y": ["30px",function(){return randint(200)+'px'},function(str,ind,inc,step,undef){step=(step!=undef)?step:1;if (!inc)step=-step;return Number(str.slice(0,-2))+step+'px'}]
 }
+/*
+    ooooooooooooooooooooooooooooooooooooo
+    o variables for helping in controls o
+    ooooooooooooooooooooooooooooooooooooo
+*/
+var curr_dict=[];
+var curr_line;
+var curr_prop;
+var curr_id;
+/*
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    o the function responsable for starting the controllers functions o
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+*/
 function initialize(){
+    // gets the property, starts the parser and starts the updateControls function
     var cursor=editor.getCursor()
     var line=cursor.line;
     var l=editor.getLine(line);
@@ -150,6 +193,11 @@ function initialize(){
     }
 
 }
+/*
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+    o the function responsable for updationg the controls box o
+    ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+*/
 function updateControls(dict){
     var temp;
     if (dict){
@@ -189,6 +237,11 @@ function updateControls(dict){
     
 
 }
+/*
+    oooooooooooooooooooooooooooooooooooooo
+    o key press handler for controls box o
+    oooooooooooooooooooooooooooooooooooooo
+*/
 function pressed(ev,el){
 
     e = ev || window.event;
@@ -226,15 +279,25 @@ function pressed(ev,el){
     }
      
 }
+/*
+    oooooooooooooooooooooooooooooooooooooooooooo
+    o undo/redo functions for the controls box o
+    oooooooooooooooooooooooooooooooooooooooooooo
+*/
+var curr_undo=[]
+var curr_undo_loc;
 function undo(){
+    // undo
     if (curr_undo_loc-1>=0)
         setProps(curr_undo_loc-1)
 }
 function redo(){
+    // redo
     if (curr_undo_loc+1<curr_undo.length)
         setProps(curr_undo_loc+1)
 }
 function setProps(i){
+    // sets the values of the element i in curr_undo in the controls box
     curr_undo_loc=i
     var arr=curr_undo[i];
     keys=Object.keys(arr)
@@ -244,6 +307,7 @@ function setProps(i){
     updateControls();
 }
 function getProps(){
+    // adds the controls box values to the curr_undo arr
     var arr={}
     curr_undo_loc=curr_undo.length
     for (var i = 0; i < curr_dict.length; i++) {
@@ -254,6 +318,7 @@ function getProps(){
     curr_undo.push(arr)
 }
 function resetProps(){
+    // resets the curr_undo arr
     curr_undo=[];
     curr_undo_loc=null;
 }
@@ -265,6 +330,8 @@ spaces on tab before properties
 docs
 style
 option=range{0,1}
+error in copy
+error in disabled buttons
 */
 
 
