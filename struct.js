@@ -1,13 +1,27 @@
+/* 
+	oooooooooooooooooooo
+	o helper functions o
+	oooooooooooooooooooo
+*/
 function loop(num){
+	// generates a list of length equal num of undefined elements
 	return Array.apply(null,Array(num));
 }
 function dictVal(dict){
+	// gets the value of a single value dictionary
     return dict[dictKey(dict)];
 }
 function dictKey(dict){
+	// gets the key of a single value dictionary
     return Object.keys(dict)[0];
 }
+/*
+	ooooooooooooooooooo
+	o the main parser o
+	ooooooooooooooooooo
+*/
 function parse1(dict){
+	// converts a property dictionary to an object
 	var key=dictKey(dict);
 	var val=dictVal(dict);
 	switch (key){
@@ -35,36 +49,40 @@ function parse1(dict){
 
 }
 
+/*
+	oooooooooooooooooooooooooooooo
+	o functions to change values o
+	oooooooooooooooooooooooooooooo
+*/
+
 function random(val){
+	// gets a random value for type (val) (ex: integer,color,...)
 	if(val_dict[val])
 		return val_dict[val][1]()
 	else
 		return val
 }
 function increaseVal(val,ind,str){
+	// increase the value for type (val) (ex: integer,color,...)
 	if(val_dict[val])
 		return val_dict[val][2](str,ind,1)
 	else
 		return str
 }
 function decreaseVal(val,ind,str){
+	// decrease the value for type (val) (ex: integer,color,...)
 	if(val_dict[val])
 		return val_dict[val][2](str,ind,0)
 	else
 		return str
 }
-
-//errors
-function copy(){
-	return new this.constructor.apply(null,this.cons())
-}
-//errors
-function valCopy(){
-	return new this.constructor(this.children.map(function(x){
-		return x.valCopy();
-	}))
-}
+/* 
+	ooooooooooooooooooooooooooooooooooooooo
+	o functions to change object's states o
+	ooooooooooooooooooooooooooooooooooooooo
+*/
 function changeState(state,undef){
+	// change the state of an object
 	resetProps()
 	if (state<this.min)state=this.min;
 	else if (this.max!=undef&&state>this.max)state=this.max;
@@ -77,11 +95,35 @@ function decreaseState(){
 	this.changeState(this.state-1);
 }
 
+/*
+	oooooooooooooooooooooooooooo
+	o main recursive functions o	
+	oooooooooooooooooooooooooooo
+*/
+//errors
+function copy(){
+	// copies an object
+	return new this.constructor.apply(null,this.cons())
+}
+//errors
+function valCopy(){
+	// copies an object with its state ad value
+	return new this.constructor(this.children.map(function(x){
+		return x.valCopy();
+	}))
+}
 function randomizeVars(){
-		this.children.forEach(function(x){x.randomizeVars();})
-		updateControls();
+	// randomize the descendant variables
+	this.children.forEach(function(x){x.randomizeVars();})
+	updateControls();
 };
+/*
+	oooooooooooooooooooooooooooooooooooo
+	o controls window helper functions o
+	oooooooooooooooooooooooooooooooooooo
+*/
 function table(){
+	// represents arguments in a vertically
 	if (Array.isArray(arguments[0]))arguments=arguments[0];
 	str=''
 	for (var i = 0; i < arguments.length; i++) {
@@ -90,6 +132,7 @@ function table(){
 	return '<div class="controls-table">'+str+'</div>'
 }
 function row(){
+	// represents arguments in a horizontally
 	if (Array.isArray(arguments[0]))arguments=arguments[0];
 	str=''
 	for (var i = 0; i < arguments.length; i++) {
@@ -97,12 +140,18 @@ function row(){
 	};
 	return '<div class="controls-row">'+str+'</div>'
 }
+/*
+	oooooooooooooooo
+	o Main classes o
+	oooooooooooooooo
+*/
 function Choose(children){
 	var self=this;
 	this.state=0;
 	this.min=0;
 	this.max=children.length-1
 	this.children=children;
+	this.children.forEach(function(x){x.parent=self});
 	this.render=function(){
 		return this.children[this.state].render();
 	}
@@ -139,6 +188,7 @@ function Choose(children){
 }
 function Concatinate(children){
 	this.children=children;
+	this.children.forEach(function(x){x.parent=self});
 	this.render=function(){
 		return this._join(this.children.map(function(x){return x.render();}));
 	}
@@ -299,7 +349,6 @@ function Variable(type,val,undef){
 		return new Variable(this.type,this.val);
 	};
 };
-var hash="#";
 function Symbol(str){
 	this.str=str;
 	this.render=function(){
