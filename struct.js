@@ -161,10 +161,10 @@ function Choose(children){
 			return[this.show(arr),arr]
 		}
 		var ind=arr.push(this)-1;
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>&lt;</button>',
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((0 && self.state==self.min)?' disabled':'')+'>&lt;</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>&gt;</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((0 && self.state==self.max)?' disabled':'')+'>&gt;</button>'),
 			row(this.children[this.state].show(arr)))
 	}
 	this.copy=function(){
@@ -231,10 +231,10 @@ function Repeat(child,sep,min,max){
 			return[this.show(arr),arr]
 		}
 		var ind=arr.push(this)-1;
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>-</button>',
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((0 && self.state==self.min)?' disabled':'')+'>-</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>+</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((0 && self.state==self.max)?' disabled':'')+'>+</button>'),
 			row(this.children.map(function(x){return x.show(arr);})))
 	}
 	this._join=function(arr){
@@ -277,10 +277,10 @@ function Check(child){
 		}
 		var ind=arr.push(this)-1;
 		console.log(this)
-		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((self.state==self.min)?' disabled':'')+'>OFF</button>',
+		return table(row('<button onclick="curr_dict['+ind+'].decreaseState()"'+((0 && self.state==self.min)?' disabled':'')+'>OFF</button>',
 			'<input id="pla_'+ind+'" readonly="readonly" value="'+this.render()+'" onkeypress="pressed(event,this)"/>',
 			'<button onclick="getProps();curr_dict['+ind+'].randomizeVars()">R</button>',
-			'<button onclick="curr_dict['+ind+'].increaseState()"'+((self.state==self.max)?' disabled':'')+'>ON</button>'),
+			'<button onclick="curr_dict['+ind+'].increaseState()"'+((0 && self.state==self.max)?' disabled':'')+'>ON</button>'),
 			row((this.state?('<tr><td colspan=3>'+this.children[0].show(arr)+'</td></tr>'):'')))
 	}
 	this.copy=function(){
