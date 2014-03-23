@@ -103,9 +103,11 @@
         elem.onmousedown=function(){
             document.getElementsByClassName('window').forEach(function(elem1){
                 if(!(Number(elem1.style.zIndex)<3))elem1.style.zIndex-=1
+                classie.remove(elem1,'active-window')
 
             });
             this.style.zIndex=10;
+            classie.add(this,'active-window')
         }
     })
     document.getElementsByClassName('window').forEach(function(elem1){
